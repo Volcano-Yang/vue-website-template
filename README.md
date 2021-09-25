@@ -82,6 +82,8 @@ npx webpack ./src/index.js
 
 打包成功的话会将index.js和heading.js打包成一个js文件，你再手动引到index.html中，用vscode的Live Server插件，在浏览器预览下效果。
 
+
+### 配置wepack配置文件
 ### 配置webpack配置文件和打包命令
 
 ```javascript
@@ -107,11 +109,52 @@ module.exports = config
 
 ``` json
    "scripts": {
-    "build": "webpack --config webpack.config.js --mode production",
-    "dev": "webpack-dev-server --hot --config webpack.dev.js --mode development"
-  }
+    "build": "webpack --config webpack.config.js --mode production"
+  },
 
 ```
+### 支持热更新和dev server
+
+安装webpack-dev-server
+
+npm i -D webpack-dev-server
+
+创建webpack.dev.js
+```javascript
+const path = require("path");
+
+// ./webpack.config.js
+/** @type {import('webpack').Configuration} */
+const config = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+  },
+  devServer: {
+    static: [
+      {
+        directory: path.join(__dirname, "public"),
+      },
+      {
+        directory: path.join(__dirname, "dist"),
+      },
+    ],
+    compress: true,
+    port: 9000,
+  },
+};
+module.exports = config;
+```
+
+将index.html从/调整到/public/，并修改引用
+
+``` json
+   "scripts": {
+    "dev": "webpack-dev-server --hot --config webpack.dev.js --mode development"
+  },
+
+```
+
 ### 支持打包ts和vue
 
 ### 支持dev
