@@ -155,6 +155,18 @@ module.exports = config;
 
 ```
 
+### 每次打包的时候都清楚上次的打包文件
+
+output: {
+    path: path.resolve(__dirname, 'dist/assets'),
+    // 在生成文件之前清空 output 目录
+    clean: true, 
+    filename: "main.js",
+  },
+  
+### 每次打包后的js文件都自动插入到html中
+https://segmentfault.com/a/1190000020771762
+
 ### 支持打包ts和vue
 
 ### 支持dev
