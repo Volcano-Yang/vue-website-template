@@ -4,8 +4,8 @@
   "description": "带你从0到1纯手工搭建一个vue的前端项目",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode production",
-    "dev": "webpack-dev-server --hot --config webpack.dev.js --mode development"
+    "build": "webpack --config webpack.config.js --mode production --progress",
+    "dev": "webpack-dev-server --hot --config webpack.dev.js --mode development --progress"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "devDependencies": {
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.2",
-    "typescript": "^4.4.3",
+    "ts-loader": "^8.3.0",
+    "typescript": "^4.3.5",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.3.0"

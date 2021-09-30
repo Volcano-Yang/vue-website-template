@@ -264,9 +264,67 @@ const config = {
 };
 ```
 
-### 支持打包ts和vue
+### 支持ts并打包
 
-### 支持dev
+1. 安装ts和ts-loader
+
+npm i -D typescript
+
+npm i -D ts-loader
+
+2. 设置ts-loader
+
+```
+ // 配置webpack的解析选项
+  resolve: {
+    // 尝试按顺序解析这些后缀名。如果有多个文件有相同的名字，但后缀名不同，webpack 会解析列在数组首位的后缀的文件 并跳过其余的后缀。
+    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      "@packages": path.resolve(__dirname, "../"),
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
+      { test: /\.tsx?$/, loader: "ts-loader" },
+    ],
+  },
+```
+
+3. 设置tsconfig.json
+```
+{
+    "compilerOptions": {
+        "target": "es5",
+        "sourceMap": true,
+        "paths": {
+            "@src/*": ["./src/*"],
+        },
+    }
+    
+}
+
+```
+
+### 配置打包进度条
+
+```
+"scripts": {
+    "build": "webpack --config webpack.config.js --mode production --progress",
+    "dev": "webpack-dev-server --hot --config webpack.dev.js --mode development --progress"
+  },
+```
+后面加 --progress
+
+
+### 支持vue并打包
 
 ## 安装tsw
  
