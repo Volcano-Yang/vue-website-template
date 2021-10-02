@@ -113,7 +113,7 @@ module.exports = config
   },
 
 ```
-### 支持热更新和dev server
+### dev server
 
 安装webpack-dev-server
 
@@ -154,6 +154,18 @@ module.exports = config;
   },
 
 ```
+
+注意：
+1. webpack-dev-server里 Watch 模式默认开启。文件修改回自动重新打包
+
+2. webpack-dev-server为了提高预览速度，构建的产物是保存在内容里的。默认资源目录为打包的产物文件夹，所以static: [
+      {
+        directory: path.join(__dirname, "public"),
+      },
+      {
+        directory: path.join(__dirname, "dist"),
+      },
+    ],可以不加。
 
 ### 每次打包的时候都清楚上次的打包文件
 

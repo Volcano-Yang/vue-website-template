@@ -5,11 +5,12 @@ const path = require("path");
 module.exports = merge(commonWebpackConfig, {
   mode: 'development',
   devServer: {
-    static: [
-      {
-        directory: path.resolve(__dirname, "../dist/"),
-      },
-    ],
+    // // dev服务器的对应资源根目录
+    // static: [
+    //   {
+    //     directory: path.join(__dirname, "../dist/"),
+    //   },
+    // ],
     compress: true,
     port: 9000,
   }
