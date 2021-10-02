@@ -4,8 +4,8 @@
   "description": "带你从0到1纯手工搭建一个vue的前端项目",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode production --progress",
-    "dev": "webpack-dev-server --hot --config webpack.dev.js --mode development --progress"
+    "build": "webpack --config ./webpack/webpack.prod.js --progress",
+    "dev": "webpack-dev-server --hot --config webpack.dev.js --progress"
   },
   "repository": {
     "type": "git",

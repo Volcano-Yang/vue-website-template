@@ -4,7 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // ./webpack.config.js
 /** @type {import('webpack').Configuration} */
 const config = {
-  entry: "./src/index.js",
+  mode: 'development',
+  entry: "./src/index.ts",
   output: {
     // 打包文件的输出目录
     path: path.resolve(__dirname, 'dist'),
@@ -16,6 +17,14 @@ const config = {
     publicPath: __dirname + '/dist/', 
     // 代码拆分后的文件名
     chunkFilename: '[name].js' 
+  },
+  // 配置webpack的解析选项
+  resolve: {
+    // 尝试按顺序解析这些后缀名。如果有多个文件有相同的名字，但后缀名不同，webpack 会解析列在数组首位的后缀的文件 并跳过其余的后缀。
+    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      "@src": path.resolve(__dirname, "../src/"),
+    },
   },
   module: {
     rules: [{
