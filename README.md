@@ -167,6 +167,39 @@ module.exports = config;
       },
     ],可以不加。
 
+
+### 配置热更新
+
+HMR 已经集成在了 webpack 模块中了，所以不需要再单独安装什么模块。
+
+使用这个特性最简单的方式就是，在运行 webpack-dev-server 命令时，通过 --hot 参数去开启这个特性。
+
+或者也可以在配置文件中通过添加对应的配置来开启这个功能。那我们这里打开配置文件，这里需要配置两个地方：
+
+首先需要将 devServer 对象中的 hot 属性设置为 true；
+然后需要载入一个插件，这个插件是 webpack 内置的一个插件，所以我们先导入 webpack 模块，有了这个模块过后，这里使用的是一个叫作 HotModuleReplacementPlugin 的插件。
+具体配置代码如下：
+
+```javascript
+// ./webpack.config.js
+const webpack = require('webpack')
+
+module.exports = {
+  // ...
+  devServer: {
+    // 开启 HMR 特性，如果资源不支持 HMR 会 fallback 到 live reloading
+    hot: true
+    // 只使用 HMR，不会 fallback 到 live reloading
+    // hotOnly: true
+  },
+  plugins: [
+    // ...
+    // HMR 特性所需要的插件
+    new webpack.HotModuleReplacementPlugin()
+  ]
+}
+```
+
 ### 每次打包的时候都清楚上次的打包文件
 
 output: {
@@ -327,7 +360,7 @@ npm i -D ts-loader
 
 ### webpack配置抽离和复用
 
-https://blog.csdn.net/hope_It/article/details/103266318
+可以参考https://blog.csdn.net/hope_It/article/details/103266318，但是要注意文件路径的差别。
 
 ### 配置打包进度条
 
@@ -339,8 +372,91 @@ https://blog.csdn.net/hope_It/article/details/103266318
 ```
 后面加 --progress
 
+### 配置source-map
+
+```
+在webpack.dev.js中添加
+
+devtool: 'source-map' // source map 设置
+
+```
 
 ### 支持vue并打包
+
+可以参考vue-loader的教程，https://vue-loader.vuejs.org/zh/guide/#vue-cli。
+
+1. 安装相应loader
+   npm install -D vue-loader vue-template-compiler
+
+2. 修改webpack配置
+
+```
+// webpack.config.js
+const { VueLoaderPlugin } = require('vue-loader')
+
+module.exports = {
+  module: {
+    rules: [
+      // ... 其它规则
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
+    ]
+  },
+  plugins: [
+    // 请确保引入这个插件！
+    new VueLoaderPlugin()
+  ]
+}
+```
+3. 修改index.html文件，添加id=app
+``` html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div id="app">
+    </div>
+  </body>
+</html>
+```
+
+4. 编写一个vue文件
+```vue
+<template>
+  <div class="example">{{ msg }}</div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      msg: 'Hello world!!!'
+    }
+  }
+}
+</script>
+
+<style>
+.example {
+  color: red;
+}
+</style>
+```
+5. 在index.js文件中引入vue和app.vue并渲染
+```
+import Vue from "vue"
+import app from "./app.vue"
+
+let vm=new Vue({
+    el:'#app',
+    render:c=>c(app)
+})
+```
 
 ## 安装tsw
  

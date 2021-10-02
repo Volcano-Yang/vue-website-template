@@ -1,11 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
 
 // ./webpack.config.js
 /** @type {import('webpack').Configuration} */
 const config = {
   entry: {
-    index: path.join(__dirname, "../src/index.ts"),
+    index: path.join(__dirname, "../src/index.js"),
   },
   output: {
     // 打包文件的输出目录
@@ -25,13 +26,21 @@ const config = {
   },
   module: {
     rules: [
+      { test: /.vue$/, use: "vue-loader" },
       {
         test: /\.html$/,
         use: [
           {
             loader: "html-loader",
           },
+        
         ],
+      },
+      // 它会应用到普通的 `.css` 文件
+      // 以及 `.vue` 文件中的 `<style>` 块
+      {
+        test: /\.css$/,
+        use: ["vue-style-loader", "css-loader"],
       },
       { test: /\.tsx?$/, loader: "ts-loader" },
     ],
@@ -39,20 +48,11 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       // 打包输出HTML标题
-      title: "自动生成 HTML",
-      // 压缩 HTML 文件
-      minify: {
-        removeComments: true, // 移除 HTML 中的注释
-        collapseWhitespace: true, // 删除空白符与换行符
-        minifyCSS: true, // 压缩内联 css
-      },
-      // 生成后的文件名
-      filename: "index.html", 
+      title: "打包vue",
       // 根据此模版生成 HTML 文件
-      template: path.join(__dirname, "../public/index.html"), 
-      // entry中的 index 入口才会被打包
-      chunks: ["index"],
+      template: path.join(__dirname, "../public/index.html"),
     }),
+    new VueLoaderPlugin(),
   ],
 };
 

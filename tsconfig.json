@@ -19,6 +19,6 @@
         "typeRoots": [
             "./node_modules/@types", // ts默认typeRoots
             // 还可以额外添加type的声明
-        ]
+        ],
     }
 }
