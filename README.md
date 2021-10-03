@@ -447,7 +447,7 @@ export default {
 }
 </style>
 ```
-5. 在index.js文件中引入vue和app.vue并渲染
+5. 在index.ts文件中引入vue和app.vue并渲染
 ```
 import Vue from "vue"
 import app from "./app.vue"
@@ -457,6 +457,15 @@ let vm=new Vue({
     render:c=>c(app)
 })
 ```
+6. 解决ts文件中引入vue文件时的“找不到模块“./app.vue”或其相应的类型声明。”报错。
 
+```typescript
+// /types/global.ts
+
+declare module '*.vue' {
+    import Vue from 'vue';
+    export default Vue;
+}
+```
 ## 安装tsw
  

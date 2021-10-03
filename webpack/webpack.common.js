@@ -6,7 +6,7 @@ const { VueLoaderPlugin } = require("vue-loader");
 /** @type {import('webpack').Configuration} */
 const config = {
   entry: {
-    index: path.join(__dirname, "../src/index.js"),
+    index: path.join(__dirname, "../src/index.ts"),
   },
   output: {
     // 打包文件的输出目录
